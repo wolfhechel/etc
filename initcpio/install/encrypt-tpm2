@@ -1,0 +1,20 @@
+#!/bin/sh
+
+build() {
+	local mod
+
+	add_module "tpm_tis"
+	add_module "tpm_tis_core"
+	add_module "tpm"
+
+	add_binary "tpm2_unseal"
+	add_binary "/usr/lib/libtss2-tcti-device.so"
+
+	add_runscript
+}
+
+help() {
+	cat <<HELPEOF
+This hooks allows for reading the encryption key from TPM.
+HELPEOF
+}

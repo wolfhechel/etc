@@ -1,0 +1,28 @@
+cryptdevice=LABEL=root:cryptroot
+root=/dev/mapper/cryptroot ro
+console=tty1
+# Makes sure that sleep mode is in deep mode and not s2idle.
+# Deep mode consumes much less power.
+mem_sleep_default=deep
+# Overrides the revision returned by the ACPI subsystem to 5,
+# this helps with power consumption on the discrete graphics.
+acpi_rev_override=1
+# Circumvents some buggy ACPI calls in XPS, not sure if this is 
+# needed anymore though.
+acpi_osi=Linux
+# Forces all devices to use ASPM for power management, even those
+# devices that doesn't support ASPM (how does that even work?)
+pcie_aspm=force
+# There's some hardware bug within the PCIe switch on the XPS, leaving
+# the dmesg completely hammered with errors. However, as the errors state 
+# the error is fixable by the kernel so we just ignore them.
+pci=noaer
+# Enables Kernel Page Table Isolation, mitigating Meltdown and KASLR exploits.
+pti=on
+# Zeroes memory during allocation and freeing, mitigating use-after-free 
+# vulnerabilities which can be used to recover sensitive information from
+# memory.
+init_on_alloc=1 init_on_free=1
+# Randomises the page allocator, improvies security by making allocations less
+# predictables.
+page_alloc.shuffle=1

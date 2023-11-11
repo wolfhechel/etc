@@ -1,0 +1,8 @@
+#!/usr/bin/ash
+
+run_hook() {
+	# Probe of MSFT0101:00: failed fix?
+	modprobe -r tpm_tis >/dev/null 2>&1
+	modprobe -a tpm_tis >/dev/null 2>&1
+	tpm2_unseal -c 0x81000000 -p pcr:sha256:0,7 -o /crypto_keyfile.bin
+}
